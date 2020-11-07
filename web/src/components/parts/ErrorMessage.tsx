@@ -11,7 +11,6 @@ const ErrorMessage: React.FC<Props> = props => {
   }
 
   const onClickDelete = (): void => {
-    console.log('hoge');
     props.deleteMessage();
   };
 

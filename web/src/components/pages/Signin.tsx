@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, Redirect, useHistory  } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { UserContext } from '../global/Auth';
+import { UserAuthContext } from '../global/Auth';
 import ErrorMessage from '../parts/ErrorMessage';
 import { isEmail } from '../../lib/validation';
 
@@ -9,10 +9,10 @@ const Signin: React.FC<{}> = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [error, setError] = React.useState('');
-  const { user } = React.useContext(UserContext);
+  const { userAuth } = React.useContext(UserAuthContext);
   const history = useHistory();
 
-  if (user.isLoggedIn) {
+  if (userAuth.isLoggedIn) {
     return <Redirect to='/'/>;
   }
 
@@ -63,7 +63,7 @@ const Signin: React.FC<{}> = () => {
   };
 
   return (
-    <div className="container og-form-field">
+    <div className="container">
       <h1 className="title is-4">サインイン</h1>
       <ErrorMessage message={error} deleteMessage={deleteErrorMessage} />
       <div className="field">

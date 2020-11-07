@@ -5,34 +5,32 @@ type Props = {
   children: React.ReactNode;
 };
 
-type User = {
+type UserAuth = {
   isLoggedIn: boolean;
   uid: string;
   name: string;
-  email: string;
 };
 
-type UserContextType = {
-  user: User;
-  setUser: React.Dispatch<React.SetStateAction<User>>;
+type UserAuthContextType = {
+  userAuth: UserAuth;
+  setUserAuth: React.Dispatch<React.SetStateAction<UserAuth>>;
 };
 
-export const initialUser: User = {
+export const initialUserAuth: UserAuth = {
   isLoggedIn: false,
   uid: '',
-  name: '',
-  email: ''
+  name: ''
 };
 
-const initialUserContext: UserContextType = {
-  user: initialUser,
-  setUser: () => {}
+const initialUserAuthContext: UserAuthContextType = {
+  userAuth: initialUserAuth,
+  setUserAuth: () => {}
 }
 
-export const UserContext = React.createContext(initialUserContext);
+export const UserAuthContext = React.createContext(initialUserAuthContext);
 
 const Auth: React.FC<Props> = props => {
-  const [user, setUser] = React.useState(initialUser);
+  const [userAuth, setUserAuth] = React.useState(initialUserAuth);
   const [isCheckingFinished, setIsCheckingFinished] = React.useState(false);
 
   React.useEffect(() => {
@@ -40,11 +38,10 @@ const Auth: React.FC<Props> = props => {
       if (currentUser) {
         console.log(currentUser);
         
-        setUser({
+        setUserAuth({
           isLoggedIn: true,
           uid: currentUser.uid || '',
-          name: currentUser.displayName || '',
-          email: currentUser.email || ''
+          name: currentUser.displayName || ''
         });
       }
       setIsCheckingFinished(true);
@@ -53,9 +50,9 @@ const Auth: React.FC<Props> = props => {
 
   if (isCheckingFinished) {
     return (
-      <UserContext.Provider value={{ user, setUser }}>
+      <UserAuthContext.Provider value={{ userAuth, setUserAuth }}>
         {props.children}
-      </UserContext.Provider>
+      </UserAuthContext.Provider>
     );
   }
   return <p>Please wait...</p>;

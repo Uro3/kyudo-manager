@@ -1,22 +1,22 @@
 import * as React from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { auth } from '../../firebase';
-import { UserContext, initialUser } from '../global/Auth';
+import { UserAuthContext, initialUserAuth } from '../global/Auth';
 
 const Signout: React.FC<{}> = () => {
   const [isSignoutFinished, setIsSignoutFinished] = React.useState(false);
-  const { setUser } = React.useContext(UserContext);
+  const { setUserAuth } = React.useContext(UserAuthContext);
   const history = useHistory();
 
   React.useEffect(() => {
     auth.signOut().then(() => {
-      setUser(initialUser);
+      setUserAuth(initialUserAuth);
       setIsSignoutFinished(true);
     }).catch(error => {
       console.log(error);
       history.goBack();
     });
-  }, [history, setUser]);
+  }, [history, setUserAuth]);
 
   if (isSignoutFinished) {
     return <Redirect to='/signin'/>;

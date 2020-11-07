@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { UserContext } from './Auth';
+import { UserAuthContext } from './Auth';
 import logo from '../../images/logo.png';
 
 const Navbar: React.FC<{}> = () => {
   const ACTIVE_CLASSNAME = 'is-active';
   const [isActive, setIsActive] = React.useState('');
-  const { user } = React.useContext(UserContext);
+  const { userAuth } = React.useContext(UserAuthContext);
 
   const toggleBurger = (): void => {    
     if (isActive === ACTIVE_CLASSNAME) {
@@ -22,14 +22,14 @@ const Navbar: React.FC<{}> = () => {
 
   let navbarStartItem: JSX.Element;  
   let navbarEndItem: JSX.Element;  
-  if (user.isLoggedIn) {
+  if (userAuth.isLoggedIn) {
     navbarStartItem = (
       <Link to="/" className="navbar-item">Home</Link>
     );
     navbarEndItem = (
       <div className="navbar-item has-dropdown is-hoverable">
         <a className="navbar-link">
-          User Name
+          {userAuth.name}
         </a>
 
         <div className="navbar-dropdown is-right">
