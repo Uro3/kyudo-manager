@@ -1,10 +1,12 @@
 import * as React from 'react';
+import styled from 'styled-components';
 import RecordScorePoint from './RecordScorePoint';
 import { RecordScoreData } from '../../types';
 
 type Props = {
   data: RecordScoreData;
   update?: (scoreId: number, index: number) => void;
+  className?: string;
 };
 
 const RecordScore: React.FC<Props> = props => {
@@ -13,10 +15,16 @@ const RecordScore: React.FC<Props> = props => {
   );
 
   return (
-    <div className="og-score-row">
+    <div className={props.className}>
       {scorePoints}
     </div>
   );
 };
 
-export default RecordScore;
+const StyledRecordScore = styled(RecordScore)`
+  & + & {
+    margin-top: 1rem;
+  }
+`;
+
+export default StyledRecordScore;

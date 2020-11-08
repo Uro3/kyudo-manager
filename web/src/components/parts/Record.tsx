@@ -1,5 +1,6 @@
 import * as React from 'react';
 import RecordView from './RecordView';
+import VSpace from './VSpace';
 import { switchStatus } from '../../domains/recordScorePointStatus';
 import { RecordData, RecordScoreData } from '../../types';
 
@@ -46,12 +47,10 @@ const Record: React.FC<Props> = props => {
   return (
     <>
       <RecordView data={props.data} update={updateRecord} />
-      <div className="og-vspace">
-        <button className="button is-small" onClick={onClickAdd}>追加</button>
-      </div>
-      <div className="og-vspace">
-        <button className="button is-small" onClick={onClickSave}>保存</button>
-      </div>
+      <VSpace />
+      <button className="button is-small" onClick={onClickAdd}>追加</button>
+      <VSpace />
+      <button className="button is-small" onClick={onClickSave}>保存</button>
     </>
   );
 };
