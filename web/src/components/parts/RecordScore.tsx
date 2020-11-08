@@ -1,24 +1,16 @@
 import * as React from 'react';
 import RecordScorePoint from './RecordScorePoint';
-import RecordScorePointEditable from './RecordScorePointEditable';
 import { RecordScoreData } from '../../types';
 
 type Props = {
   data: RecordScoreData;
-  editable: boolean;
+  update?: (scoreId: number, index: number) => void;
 };
 
 const RecordScore: React.FC<Props> = props => {
-  let scorePoints: JSX.Element[];
-  if (props.editable) {
-    scorePoints = props.data.values.map((value, index) => 
-      <RecordScorePointEditable key={index} id={index} value={value} parentId={props.data.id} />
-    );
-  } else {
-    scorePoints = props.data.values.map((value, index) => 
-      <RecordScorePoint key={index} value={value} />
-    );
-  }
+  const scorePoints = props.data.values.map((value, index) => 
+    <RecordScorePoint key={index} id={index} value={value} scoreId={props.data.id} update={props.update} />
+  );
 
   return (
     <div className="og-score-row">

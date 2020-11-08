@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Record from '../parts/Record';
+import RecordView from '../parts/RecordView';
 import { RecordData } from '../../types';
 // import dateUtil from '~/lib/dateUtil';
 
@@ -21,7 +21,7 @@ const RecordList: React.FC = () => {
   return (
     <div className="container">
       {/* <input className="input is-small og-input-date" type="date" value={date} onChange={onDateChanged} /> */}
-      <Record data={initialRecordData} editable={false} />
+      <RecordView data={initialRecordData} />
     </div>
   );
 };

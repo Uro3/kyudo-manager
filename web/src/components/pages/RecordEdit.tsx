@@ -17,9 +17,11 @@ const RecordEdit: React.FC = () => {
     setRecordData(data);
   };
 
+  const saveRecord = (data: RecordData) => {};
+
   return (
     <div className="container">
-      <Record data={recordData} editable={true} update={updateRecord} />
+      <Record data={recordData} update={updateRecord} save={saveRecord} />
     </div>
   );
 };

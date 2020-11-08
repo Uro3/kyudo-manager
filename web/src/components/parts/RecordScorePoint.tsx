@@ -1,28 +1,23 @@
 import * as React from 'react';
-import { RecordScorePointStatus } from '../../constants';
-
-const statusTextMap = new Map<RecordScorePointStatus, String>([
-  [RecordScorePointStatus.None, '-'],
-  [RecordScorePointStatus.Hit, '○'],
-  [RecordScorePointStatus.Miss, '×'],
-  [RecordScorePointStatus.Unknown, '?']
-]);
+import RecordScorePointView from './RecordScorePointView';
+import { RecordScorePointStatus } from '../../domains/recordScorePointStatus';
 
 type Props = {
+  id: number;
   value: RecordScorePointStatus;
-  onClick?: () => void;
+  scoreId: number;
+  update?: (scoreId: number, index: number) => void;
 };
 
 const RecordScorePoint: React.FC<Props> = props => {
-  const statusText = statusTextMap.get(props.value);
-  const statusClass = props.value === RecordScorePointStatus.None ? 'og-transparent' : '';
+  const onClick = () => {
+    if (props.update) {
+      props.update(props.scoreId, props.id);
+    }
+  };
 
   return (
-    <button className="og-score" onClick={props.onClick}>
-      <span className={statusClass}>
-        {statusText}
-      </span>
-    </button>
+    <RecordScorePointView value={props.value} onClick={onClick} />
   );
 };
 

@@ -1,47 +1,57 @@
 import * as React from 'react';
-import RecordScore from './RecordScore';
-import { RecordData } from '../../types';
+import RecordView from './RecordView';
+import { switchStatus } from '../../domains/recordScorePointStatus';
+import { RecordData, RecordScoreData } from '../../types';
 
 type Props = {
   data: RecordData;
-  editable: boolean;
-  update?: (data: RecordData) => void;
-  save?: (data: RecordData) => void;
+  update: (data: RecordData) => void;
+  save: (data: RecordData) => void;
 };
 
 const Record: React.FC<Props> = props => {
-  const scores = props.data.scores.map((score) => 
-    <RecordScore key={score.id} data={score} editable={props.editable} />
-  );
+  const updateRecord = (scoreId: number, index: number) => {
+    const newScores = props.data.scores.map(score => {
+      if (score.id === scoreId) {
+        score.values[index] = switchStatus(score.values[index]);
+      }
+      return score;
+    });
+    const newRecord: RecordData = {
+      ...props.data,
+      scores: newScores,
+    }
+    props.update(newRecord);
+  };
 
-  let controlElement = <></>;
-  if (props.editable) {
-    const onClickAdd = (): void => {
-      if (props.update) {
-        props.update(props.data);
-      }
+  const onClickAdd = (): void => {
+    const scores = props.data.scores;
+    const lastId = Math.max(...scores.map(score => score.id));
+    const newScore: RecordScoreData = {
+      id: lastId + 1,
+      values: [0, 0, 0, 0],
+      memo: ''
     };
-    const onClickSave = (): void => {
-      if (props.save) {
-        props.save(props.data);
-      }
-    };
-    controlElement = (
-      <>
-        <div className="og-vspace">
-          <button className="button is-small" onClick={onClickAdd}>追加</button>
-        </div>
-        <div className="og-vspace">
-          <button className="button is-small" onClick={onClickSave}>保存</button>
-        </div>
-      </>
-    )
-  }
+    const newRecord: RecordData = {
+      ...props.data,
+      scores: [...props.data.scores, newScore],
+    }
+    props.update(newRecord);
+  };
+
+  const onClickSave = (): void => {
+    props.save(props.data);
+  };
 
   return (
     <>
-      {scores}
-      {controlElement}
+      <RecordView data={props.data} update={updateRecord} />
+      <div className="og-vspace">
+        <button className="button is-small" onClick={onClickAdd}>追加</button>
+      </div>
+      <div className="og-vspace">
+        <button className="button is-small" onClick={onClickSave}>保存</button>
+      </div>
     </>
   );
 };

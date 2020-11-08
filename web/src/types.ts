@@ -1,4 +1,4 @@
-import { RecordScorePointStatus } from './constants';
+import { RecordScorePointStatus } from './domains/recordScorePointStatus';
 
 export type RecordScoreData = {
   id: number
