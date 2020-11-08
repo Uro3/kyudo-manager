@@ -7,8 +7,8 @@ import Signup from './components/pages/Signup';
 import Signin from './components/pages/Signin';
 import Signout from './components/pages/Signout';
 import Home from './components/pages/Home';
+import RecordEdit from './components/pages/RecordEdit';
 import RecordList from './components/pages/RecordList';
-
 
 const AppRoute: React.FC = () => {
   return (
@@ -19,6 +19,7 @@ const AppRoute: React.FC = () => {
       <AuthRouter>
         <Switch>
           <Route exact path='/' component={Home}></Route>
+          <Route path='/record/edit' component={RecordEdit}></Route>
           <Route path='/record' component={RecordList}></Route>
         </Switch>
       </AuthRouter>
